@@ -41,6 +41,7 @@ function chainToEthNetwork(chain: any): EthNetwork {
 	if (id === 'BSC_CHAPEL') { id = 'BSC_TESTNET'; cur = 'BNB'; }
 	if (id === 'MATIC_MAINNET') { id = 'POLYGON'; }
 	if (id === 'ETHEREUM_RINKEBY') { id = 'RINKEBY'; cur = 'ETH'; chain.chainId = 4; }
+	if (id === 'AVAX_TESTNET') { id = 'AVAX_TESTNET'; cur = 'AVAX'; chain.chainId = 43113; }
 	return {
 		id: id,
 		displayName: chain.name,
