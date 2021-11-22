@@ -36,6 +36,12 @@ function chainToEthNetwork(chain) {
         cur = 'ETH';
         chain.chainId = 4;
     }
+    if (id === 'AVAX_TESTNET') { 
+        id = 'AVAX_TESTNET'; 
+        cur = 'AVAX'; 
+        chain.chainId = 43113; 
+    }
+
     return {
         id: id,
         displayName: chain.name,
