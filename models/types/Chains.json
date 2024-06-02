@@ -38,6 +38,19 @@
 	  "explorers": [{"name":"polkadot.js","url":"https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Ftestnet.dev.svcs.ferrumnetwork.io#/explorer"}],
 	  "infoURL": "https://ferrum.network"
         },
+        {
+	  "name": "Sepolia",
+	  "chainId": 11155111,
+	  "shortName": "eth",
+	  "chain": "sepolia",
+	  "network": "testnet",
+	  "networkId": 11155111,
+	  "nativeCurrency": {"name":"Eth","symbol":"ETH","decimals":18},
+	  "rpc": ["https://rpc.sepolia.dev"],
+	  "faucets": ["https://testnet.dev.svcs.ferrumnetwork.io/faucet/"],
+	  "explorers": [{"name":"etherscan","url":"https://sepolia.etherscan.io/"}],
+	  "infoURL": "https://https://sepolia.dev/"
+        },
 	{
 	  "name": "xDAI Chain",
 	  "chainId": 100,
