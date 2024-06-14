@@ -14,9 +14,9 @@ class ValidationUtils {
             throw new ValidationError(message);
         }
     }
-    static allRequired(keys, v) {
-        keys.forEach(k => {
-            ValidationUtils.isTrue(!!k, `"${k}" must be provided`);
+    static allRequired(v) {
+        Object.keys(v).forEach(k => {
+            ValidationUtils.isTrue(!!v[k], `"${k}" must be provided`);
         });
     }
 }
