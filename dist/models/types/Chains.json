@@ -39,6 +39,19 @@
         "infoURL": "https://ferrum.network"
     },
     {
+        "name": "Base",
+        "chainId": 8453,
+        "shortName": "base",
+        "chain": "base",
+        "network": "mainner",
+        "networkId": 8453,
+        "nativeCurrency": { "name": "Base", "symbol": "BASE", "decimals": 18 },
+        "rpc": ["https://base.drpc.org"],
+        "faucets": [],
+        "explorers": [{ "name": "basescan", "url": "https://basescan.org/" }],
+        "infoURL": ""
+    },
+    {
         "name": "Sepolia",
         "chainId": 11155111,
         "shortName": "eth",
