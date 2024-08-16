@@ -43,7 +43,7 @@
         "chainId": 8453,
         "shortName": "base",
         "chain": "base",
-        "network": "mainner",
+        "network": "mainnet",
         "networkId": 8453,
         "nativeCurrency": { "name": "Base", "symbol": "BASE", "decimals": 18 },
         "rpc": ["https://base.drpc.org"],
