@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Chains downloaded from https://chainid.network/chains.json
 const ValidationUtils_1 = require("../../utils/ValidationUtils");
 const Chains_json_1 = __importDefault(require("./Chains.json"));
+const CACHE_SOURCE = 'https://raw.githubusercontent.com/ferrumnet/ferrum-plumbing/refs/heads/master/models/types/Chains.json';
+const CACHE_TIMEOUT = 1000 * 60 * 60 * 3; // 1 hours
 function updateLogoForNetwork(network, logoUri, logoBase64) {
     const net = Networks.for(network);
     net.chainLogoUri = logoUri || net.chainLogoUri;
@@ -96,13 +98,25 @@ function byId(key, items) {
 }
 class Networks {
     static for(id) {
+        Networks.cickCacheUpdate().catch(console.error);
         return this.CHAINS_BY_ID.get(id) || ValidationUtils_1.panick(`Unsupported chain "${id}"`);
     }
     static forChainId(id) {
+        Networks.cickCacheUpdate().catch(console.error);
         return this.CHAINS_BY_CHAIN_ID.get(id.toString()) || ValidationUtils_1.panick(`Unsupported chain ID "${id}"`);
+    }
+    static async cickCacheUpdate() {
+        if (Date.now() - Networks.cachetime > CACHE_TIMEOUT) {
+            const chains = await (await fetch(CACHE_SOURCE)).json();
+            Networks.cachetime = Date.now();
+            Networks.CHAINS = chains.map(chainToEthNetwork);
+            Networks.CHAINS_BY_ID = byId(c => c.id, Networks.CHAINS);
+            Networks.CHAINS_BY_CHAIN_ID = byId(c => c.chainId, Networks.CHAINS);
+        }
     }
 }
 exports.Networks = Networks;
+Networks.cachetime = Date.now();
 Networks.CHAINS = Chains_json_1.default.map(chainToEthNetwork);
 Networks.CHAINS_BY_ID = byId(c => c.id, Networks.CHAINS);
 Networks.CHAINS_BY_CHAIN_ID = byId(c => c.chainId, Networks.CHAINS);

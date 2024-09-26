@@ -12,10 +12,12 @@ export interface EthNetwork {
 }
 export declare function updateLogoForNetwork(network: string, logoUri?: string, logoBase64?: string): void;
 export declare class Networks {
+    static cachetime: number;
     static CHAINS: EthNetwork[];
     static CHAINS_BY_ID: Map<string, EthNetwork>;
     static CHAINS_BY_CHAIN_ID: Map<string, EthNetwork>;
     static for(id: string): EthNetwork;
     static forChainId(id: number): EthNetwork;
+    static cickCacheUpdate(): Promise<void>;
 }
 //# sourceMappingURL=Networks.d.ts.map

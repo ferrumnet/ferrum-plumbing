@@ -2,6 +2,9 @@
 import { panick } from '../../utils/ValidationUtils';
 import chains from './Chains.json';
 
+const CACHE_SOURCE = 'https://raw.githubusercontent.com/ferrumnet/ferrum-plumbing/refs/heads/master/models/types/Chains.json';
+const CACHE_TIMEOUT = 1000 * 60 * 60 * 3; // 1 hours
+
 /*
 	{
 	  "name": "Ethereum Mainnet",
@@ -89,14 +92,28 @@ function byId(key: (k: EthNetwork) => any, items: EthNetwork[]): Map<string, Eth
 }
 
 export class Networks {
+	static cachetime = Date.now();
 	static CHAINS = chains.map(chainToEthNetwork);
 	static CHAINS_BY_ID = byId(c => c.id, Networks.CHAINS);
 	static CHAINS_BY_CHAIN_ID = byId(c => c.chainId, Networks.CHAINS);
 	static for(id: string): EthNetwork {
+		Networks.cickCacheUpdate().catch(console.error);
 		return this.CHAINS_BY_ID.get(id)! || panick(`Unsupported chain "${id}"`);
 	}
 
 	static forChainId(id: number): EthNetwork {
+		Networks.cickCacheUpdate().catch(console.error);
 		return this.CHAINS_BY_CHAIN_ID.get(id.toString())! || panick(`Unsupported chain ID "${id}"`);
 	}
+
+	static async cickCacheUpdate() {
+		if (Date.now() - Networks.cachetime > CACHE_TIMEOUT) {
+			const chains = await (await fetch(CACHE_SOURCE)).json();
+			Networks.cachetime = Date.now();
+			Networks.CHAINS = chains.map(chainToEthNetwork);
+			Networks.CHAINS_BY_ID = byId(c => c.id, Networks.CHAINS);
+			Networks.CHAINS_BY_CHAIN_ID = byId(c => c.chainId, Networks.CHAINS);
+		}
+	}
 }
+
