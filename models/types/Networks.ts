@@ -97,16 +97,16 @@ export class Networks {
 	static CHAINS_BY_ID = byId(c => c.id, Networks.CHAINS);
 	static CHAINS_BY_CHAIN_ID = byId(c => c.chainId, Networks.CHAINS);
 	static for(id: string): EthNetwork {
-		Networks.cickCacheUpdate().catch(console.error);
+		Networks.kickCacheUpdate().catch(console.error);
 		return this.CHAINS_BY_ID.get(id)! || panick(`Unsupported chain "${id}"`);
 	}
 
 	static forChainId(id: number): EthNetwork {
-		Networks.cickCacheUpdate().catch(console.error);
+		Networks.kickCacheUpdate().catch(console.error);
 		return this.CHAINS_BY_CHAIN_ID.get(id.toString())! || panick(`Unsupported chain ID "${id}"`);
 	}
 
-	static async cickCacheUpdate() {
+	static async kickCacheUpdate() {
 		if (Date.now() - Networks.cachetime > CACHE_TIMEOUT) {
 			const chains = await (await fetch(CACHE_SOURCE)).json();
 			Networks.cachetime = Date.now();
@@ -116,4 +116,6 @@ export class Networks {
 		}
 	}
 }
+
+Networks.kickCacheUpdate().catch(console.error);
 

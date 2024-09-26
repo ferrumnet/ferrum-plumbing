@@ -98,14 +98,14 @@ function byId(key, items) {
 }
 class Networks {
     static for(id) {
-        Networks.cickCacheUpdate().catch(console.error);
+        Networks.kickCacheUpdate().catch(console.error);
         return this.CHAINS_BY_ID.get(id) || ValidationUtils_1.panick(`Unsupported chain "${id}"`);
     }
     static forChainId(id) {
-        Networks.cickCacheUpdate().catch(console.error);
+        Networks.kickCacheUpdate().catch(console.error);
         return this.CHAINS_BY_CHAIN_ID.get(id.toString()) || ValidationUtils_1.panick(`Unsupported chain ID "${id}"`);
     }
-    static async cickCacheUpdate() {
+    static async kickCacheUpdate() {
         if (Date.now() - Networks.cachetime > CACHE_TIMEOUT) {
             const chains = await (await fetch(CACHE_SOURCE)).json();
             Networks.cachetime = Date.now();
@@ -120,4 +120,5 @@ Networks.cachetime = Date.now();
 Networks.CHAINS = Chains_json_1.default.map(chainToEthNetwork);
 Networks.CHAINS_BY_ID = byId(c => c.id, Networks.CHAINS);
 Networks.CHAINS_BY_CHAIN_ID = byId(c => c.chainId, Networks.CHAINS);
+Networks.kickCacheUpdate().catch(console.error);
 //# sourceMappingURL=Networks.js.map

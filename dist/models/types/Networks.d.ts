@@ -18,6 +18,6 @@ export declare class Networks {
     static CHAINS_BY_CHAIN_ID: Map<string, EthNetwork>;
     static for(id: string): EthNetwork;
     static forChainId(id: number): EthNetwork;
-    static cickCacheUpdate(): Promise<void>;
+    static kickCacheUpdate(): Promise<void>;
 }
 //# sourceMappingURL=Networks.d.ts.map
